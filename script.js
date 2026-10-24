@@ -159,6 +159,14 @@ contactForm?.addEventListener("submit", async (event) => {
 if (currentYear) currentYear.textContent = new Date().getFullYear();
 
 // Video showcase sections are static HTML so they remain visible even if JavaScript is unavailable.
+// The clips autoplay silently on a loop through their HTML attributes; this just makes sure they start.
+(function startShowcaseVideos() {
+    document.querySelectorAll("#showcase video, #agent-result video").forEach((video) => {
+        video.muted = true; // browsers only allow autoplay when the video is muted
+        const playAttempt = video.play();
+        if (playAttempt && playAttempt.catch) playAttempt.catch(() => {});
+    });
+})();
 
 // Floating WhatsApp button (both languages). Uses the same WhatsApp number as the contact section.
 (function addWhatsAppButton() {
