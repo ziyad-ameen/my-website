@@ -157,3 +157,38 @@ contactForm?.addEventListener("submit", async (event) => {
 });
 
 if (currentYear) currentYear.textContent = new Date().getFullYear();
+
+// Video showcase sections are static HTML so they remain visible even if JavaScript is unavailable.
+
+// Floating WhatsApp button (both languages). Uses the same WhatsApp number as the contact section.
+(function addWhatsAppButton() {
+    if (document.getElementById("whatsappFloat")) return;
+
+    const label = currentLanguage === "ar" ? "واتساب" : "WhatsApp";
+    const aria = currentLanguage === "ar" ? "راسلني على واتساب" : "Message me on WhatsApp";
+
+    const style = document.createElement("style");
+    style.textContent =
+        ".whatsapp-float{position:fixed;z-index:60;inset-inline-end:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:9px;min-height:50px;padding:0 18px 0 14px;border-radius:999px;background:#178f50;color:#fff;font-size:.86rem;font-weight:800;box-shadow:0 12px 32px rgba(21,24,22,.28);transition:transform .2s ease,box-shadow .2s ease,background .2s ease}" +
+        "[dir='rtl'] .whatsapp-float{padding:0 14px 0 18px}" +
+        ".whatsapp-float:hover,.whatsapp-float:focus-visible{background:#127a43;transform:translateY(-2px);box-shadow:0 16px 38px rgba(21,24,22,.34)}" +
+        ".whatsapp-float svg{width:24px;height:24px;flex:0 0 auto}" +
+        "@media (max-width:640px){.whatsapp-float{inset-inline-end:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));min-height:48px}}";
+    document.head.appendChild(style);
+
+    const link = document.createElement("a");
+    link.id = "whatsappFloat";
+    link.className = "whatsapp-float";
+    link.href = "https://wa.me/601153152511";
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", aria);
+    link.innerHTML =
+        '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+            '<path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/>' +
+            '<path d="M8.6 9.4c.2 2.6 3.2 5.2 5.9 5.5l1-1.4-1.9-.9-.8.6c-.9-.4-1.6-1.1-2-2l.6-.8-.9-1.9z" fill="currentColor" stroke="none"/>' +
+        '</svg>' +
+        '<span></span>';
+    link.querySelector("span").textContent = label;
+    document.body.appendChild(link);
+})();
